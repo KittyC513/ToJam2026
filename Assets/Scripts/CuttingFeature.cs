@@ -35,7 +35,6 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         if (!fillBar.enabled)
             fillBar.enabled = true;
 
-
         radialBar.fillAmount = cutAmount;
         radialBar = fillBar;
         radialBarColor = radialBar.color;
@@ -66,7 +65,6 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         line.rotation = Quaternion.Lerp(line.rotation, target, Time.deltaTime * cutSpeed);
 
     }
-
      void Update()
     {
         if(isCutting && radialBar != null) 
@@ -124,9 +122,8 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
             fill = radialBar.rectTransform;
 
             radialBar.fillAmount = cutAmount;
-            cheeseSize -= cutAmount;
+
+            cheeseSize = cheessBar.fillAmount;
         }
     }
-    
-
 }
