@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 78cb8e4231619aa4cabea202cc3f2fed
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111398
+  packageName: Character Creator 2D
+  packageVersion: 1.95
+  assetPath: Assets/CharacterCreator2D/Data/Shaders/Resources/_Baked Armor.shader
+  uploadId: 621966

@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 7f07b92849922f44fbe915b23ff92a6b
+timeCreated: 1519657911
+licenseType: Store
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111398
+  packageName: Character Creator 2D
+  packageVersion: 1.95
+  assetPath: Assets/CharacterCreator2D/Data/Shaders/Armor Recolor Diffuse.shader
+  uploadId: 621966

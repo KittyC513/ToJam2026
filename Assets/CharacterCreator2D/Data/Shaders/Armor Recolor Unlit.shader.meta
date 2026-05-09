@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 9ab6185bd0c2d2e469096d7ecfdeda30
+timeCreated: 1513514395
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111398
+  packageName: Character Creator 2D
+  packageVersion: 1.95
+  assetPath: Assets/CharacterCreator2D/Data/Shaders/Armor Recolor Unlit.shader
+  uploadId: 621966

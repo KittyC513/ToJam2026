@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: bc4d7f77dcf5ea14ea4393f61c9fa1ee
+timeCreated: 1513416553
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111398
+  packageName: Character Creator 2D
+  packageVersion: 1.95
+  assetPath: Assets/CharacterCreator2D/Data/Shaders/Character Skin Unlit.shader
+  uploadId: 621966

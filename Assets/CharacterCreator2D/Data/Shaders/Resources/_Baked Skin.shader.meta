@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6d18b3157bd4c96489514a44c42a14df
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111398
+  packageName: Character Creator 2D
+  packageVersion: 1.95
+  assetPath: Assets/CharacterCreator2D/Data/Shaders/Resources/_Baked Skin.shader
+  uploadId: 621966
