@@ -9,20 +9,41 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
     public RectTransform line;
     public float cutSpeed = 10f;
     public Image radialBar;
+    public Image cheessBar;
+    public Image fillBar;
     public RectTransform staticLine;
     public RectTransform cuttingLine;
+    private Transform originalPos;
     public Color radialBarColor;
+
+    public RectTransform fill;
+
+    //public RectTransform fill;
+    public float cutAmount = 1;
+
+    public float cheeseSize = 1;
 
     private void Start()
     {
-        radialBarColor = radialBar.color;
-        radialBarColor.a = 0.25f;
-        radialBar.color = radialBarColor;
-
+        originalPos = cuttingLine.transform;
+        radialBar = fillBar;
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
     {
+        //Initial setup for the cutting process, enable the fillBar and set its color to a semi-transparent version of its original color
+        if (!fillBar.enabled)
+            fillBar.enabled = true;
+
+
+        radialBar.fillAmount = cutAmount;
+        radialBar = fillBar;
+        radialBarColor = radialBar.color;
+        radialBarColor.a = 0.25f;
+        radialBar.color = radialBarColor;
+        fill = radialBar.rectTransform;
+
+
         isCutting = true;
         // Calculate the direction from the line to the mouse position
         Vector2 direction = eventData.position - (Vector2)RectTransformUtility.WorldToScreenPoint(null, line.position);
@@ -48,33 +69,64 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
      void Update()
     {
-        if(isCutting) 
+        if(isCutting && radialBar != null) 
             Cut();
     }
 
     void Cut()
     {
+
         // Calculate the angle difference between the static line and the cutting line
         float staticAngle = staticLine.eulerAngles.z;
         float cuttingAngle = cuttingLine.eulerAngles.z - 180f;
 
         float angleDifference = (staticAngle - cuttingAngle + 360f) % 360f;
 
-        radialBar.fillAmount = 1 - (angleDifference / 360);
+        if(angleDifference <= 10)
+        {
+            Reset();
+            return;
+        }
 
-        radialBarColor.a = 0.25f;
-        radialBar.color = radialBarColor;
-
-
+        radialBar = fillBar;
+        //radialBar.fillAmount = 1 - (angleDifference / 360);
+        radialBar.fillAmount = angleDifference / 360;
+        cutAmount = radialBar.fillAmount;
         // If the mouse left button is released, consider the cut is done
         if (Input.GetMouseButtonUp(0))
         {
-            radialBarColor.a = 0.75f;
-            radialBar.color = radialBarColor;
+            CheeseCutCheck();
             isCutting = false;
-        }
-            
+        }            
     }
 
+    void Reset()
+    {
+        if(cutAmount >= 0.9f)
+        {
+            line.rotation = Quaternion.Lerp(line.rotation, originalPos.rotation, Time.deltaTime * cutSpeed);
+            radialBar.fillAmount = cutAmount;
+        }
+    }
+
+    void CheeseCutCheck()
+    {
+        if (cutAmount >= cheeseSize)
+        {
+            Reset();
+        }
+        else
+        {
+            radialBar = cheessBar;
+            fillBar.enabled = false;
+
+            radialBar.fillAmount = radialBar.fillAmount;
+            fill = radialBar.rectTransform;
+
+            radialBar.fillAmount = cutAmount;
+            cheeseSize -= cutAmount;
+        }
+    }
+    
 
 }
