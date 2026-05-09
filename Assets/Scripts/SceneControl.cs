@@ -37,9 +37,28 @@ public class SceneControl : MonoBehaviour
             case 3:
                 cheeseObj = Resources.Load<GameObject>("Prefabs/Cheese3");
                 break;
+            case 4:
+                cheeseObj = Resources.Load<GameObject>("Prefabs/Cheese3");
+                break;
 
         }
-        //Instantiate(cheeseObj, canvas);
-        //cheeseList.Add(cheeseObj);
+        cheeseList.Add(Instantiate(cheeseObj, canvas));
+        Transform cuttingLine = cheeseList[cheeseList.Count - 1].transform.Find("CuttingLine");
+
+        CuttingFeature cuttingFeature = cheeseList[cheeseList.Count - 1].GetComponent<CuttingFeature>();
+        if (cuttingFeature == null) return;
+
+        cuttingFeature.cheeseSize = 1 - cheeseList[cheeseList.Count - 2].GetComponent<CuttingFeature>().cheeseSize;
+
+        cuttingFeature.radialBar = cuttingFeature.cheessBar;
+        cuttingFeature.fillBar.enabled = false;
+
+        cuttingFeature.radialBar.fillAmount = cuttingFeature.radialBar.fillAmount;
+        cuttingFeature.fill = cuttingFeature.radialBar.rectTransform;
+
+        cuttingFeature.radialBar.fillAmount = cuttingFeature.cutAmount;
+
+        cuttingFeature.cheeseSize = cuttingFeature.cheessBar.fillAmount;
+
     }
 }

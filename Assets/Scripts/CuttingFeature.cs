@@ -23,6 +23,7 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     public float cheeseSize = 1;
 
+
     private void Start()
     {
         originalPos = cuttingLine.transform;
@@ -127,14 +128,6 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
             cheeseSize = cheessBar.fillAmount;
 
             SceneControl.instance.SliceCheese(1);
-
-            if(SceneControl.instance.cheeseList.Count > 0)
-            {
-                CuttingFeature cuttingFeature = SceneControl.instance.cheeseList[1].GetComponent<CuttingFeature>();
-                
-                if(cuttingFeature != null) 
-                  cuttingFeature.cheeseSize = 1 - cheeseSize;
-            }
 
         }
     }

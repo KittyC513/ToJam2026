@@ -943,7 +943,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheeseObj: {fileID: 332804258945061992, guid: 687e580554f1f28469e54537fce93fe5, type: 3}
   canvas: {fileID: 450422840}
-  cheeseList: []
+  cheeseList:
+  - {fileID: 132055138}
 --- !u!4 &1429781249
 Transform:
   m_ObjectHideFlags: 0
@@ -953,7 +954,7 @@ Transform:
   m_GameObject: {fileID: 1429781247}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1146.6204, y: 415.23462, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1115,6 +1116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2105055982}
+  - component: {fileID: 2105055983}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1131,12 +1133,24 @@ Transform:
   m_GameObject: {fileID: 2105055981}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 373.50458, y: 330.77255, z: -0.14700708}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2105055983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105055981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 068ded7ab0a86654fb7b0915d44cf90f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
