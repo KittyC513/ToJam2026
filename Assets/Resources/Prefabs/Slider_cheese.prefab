@@ -240,6 +240,7 @@ MonoBehaviour:
   radialBarColor: {r: 0, g: 0, b: 0, a: 0}
   fill: {fileID: 0}
   cutAmount: 0
+  cheeseSize: 1
 --- !u!1 &6820775221112699963
 GameObject:
   m_ObjectHideFlags: 0
@@ -452,13 +453,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: c6c84f24adc7a6544868982871e34dda, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b206d89f4eda284095a91a447a730b9, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 0
-  m_FillClockwise: 0
+  m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
@@ -527,13 +528,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2413806693520163455, guid: c6c84f24adc7a6544868982871e34dda, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0b206d89f4eda284095a91a447a730b9, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
-  m_FillClockwise: 0
+  m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
