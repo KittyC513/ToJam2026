@@ -867,7 +867,9 @@ MonoBehaviour:
   isCutting: 0
   line: {fileID: 1217235138}
   cutSpeed: 10
-  radialBar: {fileID: 160593345}
+  radialBar: {fileID: 0}
+  cheessBar: {fileID: 46077637}
+  fillBar: {fileID: 160593345}
   staticLine: {fileID: 1593299167}
   cuttingLine: {fileID: 1217235138}
   radialBarColor: {r: 0, g: 0, b: 0, a: 0}
