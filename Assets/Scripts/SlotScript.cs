@@ -14,6 +14,7 @@ public class SlotScript : MonoBehaviour
     [Tooltip("Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500")]
     // Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500
     public int objectType;
+    public bool ignoreType = false;
     //
     public int selfIndex;
     public bool isWheel = false;
@@ -67,7 +68,7 @@ public class SlotScript : MonoBehaviour
 
                 if (collision.gameObject.GetComponent<ObjectMovementScript>() && wantsToBeHeld == null)
                 {
-                    if (collision.gameObject.GetComponent<ObjectMovementScript>().objectType == this.objectType)
+                    if (collision.gameObject.GetComponent<ObjectMovementScript>().objectType == this.objectType || this.ignoreType)
                     {
                         Debug.Log("3 Alert");
                         wantsToBeHeld = collision.gameObject.GetComponent<ObjectMovementScript>();
@@ -85,7 +86,7 @@ public class SlotScript : MonoBehaviour
     {
         if(wantsToBeHeld != null)
         {
-            if (wantsToBeHeld.GetComponent<ObjectMovementScript>())
+            if (wantsToBeHeld.GetComponent<ObjectMovementScript>() && collision.gameObject == wantsToBeHeld.gameObject)
             {
                 objectLeft(wantsToBeHeld.gameObject);
             }
