@@ -866,16 +866,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCutting: 0
   line: {fileID: 1217235138}
-  cutSpeed: 10
+  cutSpeed: 20
   radialBar: {fileID: 0}
   cheessBar: {fileID: 46077637}
   fillBar: {fileID: 160593345}
+  cheese: {fileID: 46077636}
   staticLine: {fileID: 1593299167}
   cuttingLine: {fileID: 1217235138}
   radialBarColor: {r: 0, g: 0, b: 0, a: 0}
   fill: {fileID: 0}
   cutAmount: 1
   cheeseSize: 1
+  cheeseIndex: 0
+  outwardForce: 45
 --- !u!1 &1414964721
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,8 +946,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheeseObj: {fileID: 332804258945061992, guid: 687e580554f1f28469e54537fce93fe5, type: 3}
   canvas: {fileID: 450422840}
-  cheeseList:
-  - {fileID: 132055138}
 --- !u!4 &1429781249
 Transform:
   m_ObjectHideFlags: 0
@@ -1151,6 +1152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 068ded7ab0a86654fb7b0915d44cf90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cheeseList: []
+  sliceCount: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

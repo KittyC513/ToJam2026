@@ -231,16 +231,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCutting: 0
   line: {fileID: 972087857741810121}
-  cutSpeed: 10
+  cutSpeed: 20
   radialBar: {fileID: 0}
   cheessBar: {fileID: 8756284812396285442}
   fillBar: {fileID: 3195308277303293152}
+  cheese: {fileID: 3375293799089252956}
   staticLine: {fileID: 1831461330899154812}
   cuttingLine: {fileID: 972087857741810121}
   radialBarColor: {r: 0, g: 0, b: 0, a: 0}
   fill: {fileID: 0}
   cutAmount: 0
   cheeseSize: 1
+  cheeseIndex: 0
+  outwardForce: 45
 --- !u!1 &6820775221112699963
 GameObject:
   m_ObjectHideFlags: 0

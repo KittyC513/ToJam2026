@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public List<CuttingFeature> cheeseList = new List<CuttingFeature>();
 
+    public int sliceCount = 0;
 
     private static GameManager instance;
 

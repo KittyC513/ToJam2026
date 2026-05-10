@@ -7,10 +7,11 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 {
     public bool isCutting;
     public RectTransform line;
-    public float cutSpeed = 10f;
+    public float cutSpeed = 20f;
     public Image radialBar;
     public Image cheessBar;
     public Image fillBar;
+    public RectTransform cheese;
     public RectTransform staticLine;
     public RectTransform cuttingLine;
     private Transform originalPos;
@@ -23,12 +24,21 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     public float cheeseSize = 1;
 
+    public int cheeseIndex;
+
+    public float outwardForce = 60f;
+
 
     private void Start()
     {
+        GameManager.Instance.cheeseList.Add(this);
+        cheeseIndex = GameManager.Instance.sliceCount;
+        GameManager.Instance.sliceCount += 1;
+
         originalPos = cuttingLine.transform;
         radialBar = fillBar;
 
+        GenerateNewSlice();
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
@@ -84,7 +94,7 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
         if(angleDifference <= 10)
         {
-            Reset();
+            //Reset();
             return;
         }
 
@@ -127,8 +137,50 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
             cheeseSize = cheessBar.fillAmount;
 
-            SceneControl.instance.SliceCheese(1);
+            cuttingLine.gameObject.SetActive(false);
+            staticLine.gameObject.SetActive(false);
 
+            SceneControl.instance.SliceCheese(1);
         }
+    }
+
+    void GenerateNewSlice() 
+    {
+        Vector2 outward = Vector2.zero;
+        radialBar = cheessBar;
+        fillBar.enabled = false;
+
+        radialBar.fillAmount = radialBar.fillAmount;
+        fill = radialBar.rectTransform;
+
+        if(GameManager.Instance.cheeseList.Count > 1)
+        {
+            cutAmount = 1 - GameManager.Instance.cheeseList[cheeseIndex - 1].cheeseSize;
+            Debug.Log("Cut Amount: " + cutAmount);
+
+            if (cutAmount < 0.5f)
+            {
+                outward = -cheese.up * outwardForce + cheese.right * outwardForce;
+            }
+            else if (cutAmount > 0.5f)
+            {
+                outward = cheese.up * outwardForce + cheese.right * outwardForce;
+            }
+            else 
+            {
+                outward = -cheese.right * outwardForce;
+            }
+
+            cheese.localScale = new Vector3(-1, 1, 1);
+            cheese.anchoredPosition += outward;
+
+
+            staticLine.gameObject.SetActive(false);
+            cuttingLine.gameObject.SetActive(false);
+        }
+
+        radialBar.fillAmount = cutAmount;
+
+        cheeseSize = cheessBar.fillAmount;
     }
 }
