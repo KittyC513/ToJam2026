@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ObjectMovementScript : MonoBehaviour
 {
@@ -11,13 +13,22 @@ public class ObjectMovementScript : MonoBehaviour
     public float forceEmit = 5f;
     public float dampen = 1f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Tooltip("Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500")]
+    // Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500
+    public int objectType;
+    //
+    public bool submitToTaker = false;
+    public bool beingSlotted = false;
+    public SlotScript controlTaken;
+
+
+    // -----
     void Start()
     {
         origPivot = transform.localPosition;
     }
 
-    // Update is called once per frame
+    // -----
     void Update()
     {
         if (isSelected)
@@ -31,34 +42,65 @@ public class ObjectMovementScript : MonoBehaviour
 
             thisRB.AddForce((direction * forceEmit)+ dampener, ForceMode2D.Force);
         }
+        else if (controlTaken != null && !isSelected && beingSlotted)
+        {
+            Debug.Log("5 Alert");
+            Vector2 targetPos = controlTaken.gameObject.transform.position;
+            
+            Vector2 dampener = -thisRB.linearVelocity * dampen;
+            Vector2 currentPos = new Vector2(this.transform.position.x, this.transform.position.y);
+            Vector2 threshHold = new Vector2(.01f, .01f);
+            Vector2 threshHoldTwo = new Vector2(.3f,.3f);
+
+            thisRB.AddForce(((targetPos - currentPos) * forceEmit) + dampener, ForceMode2D.Force);
+
+            if (targetPos.x - currentPos.x < threshHold.x && targetPos.x - currentPos.x > -threshHold.x && targetPos.y - currentPos.y < threshHold.y && targetPos.y - currentPos.y > -threshHold.y)
+            {
+                targetPos = currentPos;
+                isGrabbable = true;
+                thisRB.constraints = RigidbodyConstraints2D.FreezeAll;
+                beingSlotted = false;
+            }
+            else if (targetPos.x - currentPos.x < threshHoldTwo.x && targetPos.x - currentPos.x > -threshHoldTwo.x && targetPos.y - currentPos.y < threshHoldTwo.y && targetPos.y - currentPos.y > -threshHoldTwo.y)
+            {
+                thisRB.MovePosition(targetPos);
+            }
+
+
+        }
     }
 
     void OnMouseDown()
     {
         if (isGrabbable)
         {
-            isSelected = true;
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 worldPosition = this.transform.InverseTransformPoint(mousePosition);
-            targetPivot.x = worldPosition.x;
-            targetPivot.y = worldPosition.y;
+            takeHold();
         }
     }
 
     private void OnMouseUp()
     {
-        if (isSelected)
+        if (beingSlotted == true)
         {
+            Debug.Log("LUP1 Alert");
             isSelected = false;
+            submitToTaker = true;
             targetPivot = origPivot;
         }
+
+        else if (isSelected)
+                {
+            Debug.Log("LUP3 Alert");
+            isSelected = false;
+            targetPivot = origPivot;
+                }
     }
 
     void OnMouseEnter()
     {
         if(!isSelected)
         {
-            Debug.Log("Mouse is here!");
+//            Debug.Log("Mouse is here!");
             isGrabbable = true;
         }
 
@@ -68,9 +110,38 @@ public class ObjectMovementScript : MonoBehaviour
     {
         if (!isSelected)
         {
-            Debug.Log("Mouse is no longer here!");
+//            Debug.Log("Mouse is no longer here!");
             isGrabbable = false;
         }
+    }
+
+    void takeHold()
+    {
+        isSelected = true;
+
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 worldPosition = this.transform.InverseTransformPoint(mousePosition);
+        targetPivot.x = worldPosition.x;
+        targetPivot.y = worldPosition.y;
+
+        thisRB.constraints = RigidbodyConstraints2D.None;
+
+        if (controlTaken != null)
+        {
+            controlTaken.objectLeft(this.gameObject);
+            controlTaken = null;
+
+        }
+
+        submitToTaker = false;
+        beingSlotted = false;
+    }
+
+    public void GetSlotted(SlotScript slot)
+    {
+        Debug.Log("9 Alert");
+        isSelected = false;
+        controlTaken = slot;
     }
 
 }
