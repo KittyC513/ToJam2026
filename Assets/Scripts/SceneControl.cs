@@ -88,6 +88,8 @@ public class SceneControl : MonoBehaviour
     IEnumerator WaitForCut(float timer)
     {
         yield return new WaitForSeconds(timer);
+        GameManager.Instance.SliceSize();
+        yield return new WaitForSeconds(timer);
 
         piece_left.enabled = true;
         piece_right.enabled = true;

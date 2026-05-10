@@ -2040,6 +2040,8 @@ MonoBehaviour:
   isSelected: 0
   sliceCount: 0
   requiredCutAmount: 0
+  slice_leftSize: 0
+  slice_rightSize: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

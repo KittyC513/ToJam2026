@@ -40,6 +40,10 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
     {
         staticLine.GetComponent<Image>().enabled = true;
         cuttingLine.GetComponent<Image>().enabled = true;
+        cheeseImage.enabled = true;
+
+        if(GameManager.Instance.cheeseList[cheeseIndex - 1] != null)
+            cheeseSize = 1 - GameManager.Instance.cheeseList[cheeseIndex-1].cheeseSize;
     }
     private void Start()
     {
@@ -176,10 +180,14 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
             cheeseSize = cheessBar.fillAmount;
 
-            cuttingLine.gameObject.SetActive(false);
-            staticLine.gameObject.SetActive(false);
+            //cuttingLine.gameObject.SetActive(false);
+            //staticLine.gameObject.SetActive(false);
+
+            staticLine.GetComponent<Image>().enabled = false;
+            cuttingLine.GetComponent<Image>().enabled = false;
 
             SceneControl.instance.SliceCheese(1);
+
         }
     }
 

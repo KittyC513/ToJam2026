@@ -17,6 +17,12 @@ public class GameManager : MonoBehaviour
 
     public float requiredCutAmount = 0.5f;
 
+    public float slice_leftSize;
+    public float slice_rightSize;
+
+    //public float slide_leftSize;
+
+    //public float slide_rightSize;
     public static GameManager Instance
     {
         get { return instance; }
@@ -63,4 +69,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SliceSize()
+    {
+        sliceList[0].cheeseSize = slice_leftSize;
+        sliceList[1].cheeseSize = slice_rightSize;
+    }
 }
