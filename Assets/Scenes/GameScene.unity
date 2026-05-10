@@ -130,6 +130,9 @@ GameObject:
   - component: {fileID: 46077636}
   - component: {fileID: 46077638}
   - component: {fileID: 46077637}
+  - component: {fileID: 46077639}
+  - component: {fileID: 46077641}
+  - component: {fileID: 46077640}
   m_Layer: 5
   m_Name: Cheese
   m_TagString: Untagged
@@ -194,6 +197,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46077635}
   m_CullTransparentMesh: 1
+--- !u!114 &46077639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46077635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d60aa40360d570449cedd016351298b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hovering: 0
+  cuttingFeature: {fileID: 0}
+--- !u!114 &46077640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46077635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582c864a55e91a8488d6fdfe75d6d20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 46077641}
+--- !u!114 &46077641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46077635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
+  m_EffectDistance: {x: 5, y: -5}
+  m_UseGraphicAlpha: 0
 --- !u!1 &132055138
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,6 +807,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &757073300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 757073302}
+  - component: {fileID: 757073301}
+  m_Layer: 0
+  m_Name: TargetCheese
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &757073301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757073300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79a96d88786bb124883e54ddb7a89e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &757073302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757073300}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1217235137
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,8 +862,9 @@ GameObject:
   - component: {fileID: 1217235138}
   - component: {fileID: 1217235140}
   - component: {fileID: 1217235139}
-  - component: {fileID: 1217235141}
   - component: {fileID: 1217235142}
+  - component: {fileID: 1217235144}
+  - component: {fileID: 1217235143}
   m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
@@ -839,19 +929,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217235137}
   m_CullTransparentMesh: 1
---- !u!114 &1217235141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1217235137}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d60aa40360d570449cedd016351298b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hovering: 0
 --- !u!114 &1217235142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,6 +956,34 @@ MonoBehaviour:
   cheeseSize: 1
   cheeseIndex: 0
   outwardForce: 45
+--- !u!114 &1217235143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217235137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 582c864a55e91a8488d6fdfe75d6d20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 1217235144}
+--- !u!114 &1217235144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217235137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.12452829, g: 0.12452829, b: 0.12452829, a: 0}
+  m_EffectDistance: {x: 0, y: 0}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1414964721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,3 +1269,4 @@ SceneRoots:
   - {fileID: 752735878}
   - {fileID: 2105055982}
   - {fileID: 1429781249}
+  - {fileID: 757073302}
