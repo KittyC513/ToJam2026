@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 public class ObjectMovementScript : MonoBehaviour
 {
 
+    public float currentWedgeSize;
+
     public bool isGrabbable = false;
     public bool isSelected = false;
     private Vector2 origPivot = Vector2.zero;

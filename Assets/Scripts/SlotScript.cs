@@ -27,7 +27,11 @@ public class SlotScript : MonoBehaviour
 
     public CircleCollider2D selfCollider;
 
+    public GameObject slotToClone;
 
+    public CuttingBoardController controllerCut;
+
+    public float toBeCut = 0;
 
     private List<GameObject> detectedObjects = new List<GameObject>();
 
@@ -57,26 +61,29 @@ public class SlotScript : MonoBehaviour
 
     public void  OnTriggerStay2D(Collider2D collision)
     {
-        // Might change it so the tags are cheese, wheel, and weight
-        if (heldItem == null && collision.gameObject.CompareTag("Object"))
+        if(objectType != 25)
         {
-            Debug.Log("1 Alert");
-            if (!detectedObjects.Contains(collision.gameObject))
+            // Might change it so the tags are cheese, wheel, and weight
+            if (heldItem == null && collision.gameObject.CompareTag("Object"))
             {
-                Debug.Log("2 Alert");
-                detectedObjects.Add(collision.gameObject);
-
-                if (collision.gameObject.GetComponent<ObjectMovementScript>() && wantsToBeHeld == null)
+                Debug.Log("1 Alert");
+                if (!detectedObjects.Contains(collision.gameObject))
                 {
-                    if (collision.gameObject.GetComponent<ObjectMovementScript>().objectType == this.objectType || this.ignoreType)
+                    Debug.Log("2 Alert");
+                    detectedObjects.Add(collision.gameObject);
+
+                    if (collision.gameObject.GetComponent<ObjectMovementScript>() && wantsToBeHeld == null)
                     {
-                        Debug.Log("3 Alert");
-                        wantsToBeHeld = collision.gameObject.GetComponent<ObjectMovementScript>();
-                        wantsToBeHeld.beingSlotted = true;
+                        if (collision.gameObject.GetComponent<ObjectMovementScript>().objectType == this.objectType || this.ignoreType)
+                        {
+                            Debug.Log("3 Alert");
+                            wantsToBeHeld = collision.gameObject.GetComponent<ObjectMovementScript>();
+                            wantsToBeHeld.beingSlotted = true;
+                        }
+
                     }
 
                 }
-
             }
         }
         
@@ -111,4 +118,37 @@ public class SlotScript : MonoBehaviour
         }
     }
 
+    // pushed by cutting board
+    public void NewCheese(GameObject gameObject, float newSize)
+    {
+        if (objectType == 25 && slotToClone != null)
+        {
+            slotToClone = Instantiate(gameObject, this.transform);
+            heldItem = slotToClone.GetComponent<ObjectMovementScript>();
+            wantsToBeHeld = heldItem;
+            heldItem.controlTaken = this;
+        }
+    }
+
+    // requested by cutting board
+    public float GiveCheese()
+    {
+        if (objectType == 24 && heldItem != null)
+        {
+            return toBeCut;
+        }
+        else
+        { 
+            return 1; 
+        }
+    }
+
+    //Called by cut script
+    public void setCutSize(float forMe,float forYou)
+    {
+        toBeCut = forYou;
+        heldItem.currentWedgeSize = forMe;
+        controllerCut.giveDataToClone();
+
+    }
 }
