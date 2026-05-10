@@ -11,17 +11,21 @@ public class ObjectMovementScript : MonoBehaviour
     public float forceEmit = 5f;
     public float dampen = 1f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public bool beingSlotted = false;
+    public GameObject controlTaken;
+
+    // -----
     void Start()
     {
         origPivot = transform.localPosition;
     }
 
-    // Update is called once per frame
+    // -----
     void Update()
     {
         if (isSelected)
         {
+            controlTaken = null;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 offset = new Vector3(targetPivot.x, targetPivot.y, 0);
             Vector3 truePos = new Vector3(thisRB.position.x - offset.x,thisRB.position.y - offset.y,0);
