@@ -1,21 +1,34 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+[System.Serializable]
+public class slotOpenedEvent : UnityEvent { }
+
 public class SlotScript : MonoBehaviour
 {
-    public UnityEvent<int> slotOpened;
+    public slotOpenedEvent slotType;
 
-    public GameObject heldItem = null;
-    public GameObject wantsToBeHeld;
-    // Swiss = 1 // Brie = 2
-    public int cheeseType = 1;
+    [Tooltip("Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500")]
+    // Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500
+    public int objectType;
+    //
     public int selfIndex;
     public bool isWheel = false;
 
-    public ShelfSlots ShelfSlots;
+    public ObjectMovementScript heldItem = null;
+    public ObjectMovementScript wantsToBeHeld = null;
+    
+    public int keyPointType;
+    public ShelfSlots shelfSlots;
+
     public CircleCollider2D selfCollider;
 
-    // To do: Invoke listener event when a slot opens, throwing an int for the keypoint type. Add logic to object script to grab item name. Actual slotting of the object.
+
+
+    private List<GameObject> detectedObjects = new List<GameObject>();
 
     void Start()
     {
@@ -23,21 +36,78 @@ public class SlotScript : MonoBehaviour
         {
             selfCollider = this.gameObject.GetComponent<CircleCollider2D>();
         }
+        if(selfCollider != null)
+        {
+            detectedObjects = new List<GameObject>();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(wantsToBeHeld != null && heldItem == null && wantsToBeHeld.submitToTaker == true)
+        {
+            Debug.Log("4 Alert");
+            heldItem = wantsToBeHeld;
+            wantsToBeHeld.GetSlotted(this);
+            wantsToBeHeld.submitToTaker = false;
+        }
+    }
+
+    public void  OnTriggerStay2D(Collider2D collision)
+    {
+        // Might change it so the tags are cheese, wheel, and weight
+        if (heldItem == null && collision.gameObject.CompareTag("Object"))
+        {
+            Debug.Log("1 Alert");
+            if (!detectedObjects.Contains(collision.gameObject))
+            {
+                Debug.Log("2 Alert");
+                detectedObjects.Add(collision.gameObject);
+
+                if (collision.gameObject.GetComponent<ObjectMovementScript>() && wantsToBeHeld == null)
+                {
+                    if (collision.gameObject.GetComponent<ObjectMovementScript>().objectType == this.objectType)
+                    {
+                        Debug.Log("3 Alert");
+                        wantsToBeHeld = collision.gameObject.GetComponent<ObjectMovementScript>();
+                        wantsToBeHeld.beingSlotted = true;
+                    }
+
+                }
+
+            }
+        }
         
     }
 
-    public void OnCollisionStay2D(Collision2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
-        if (heldItem == null)
+        if(wantsToBeHeld != null)
         {
-
+            if (wantsToBeHeld.GetComponent<ObjectMovementScript>())
+            {
+                objectLeft(wantsToBeHeld.gameObject);
+            }
         }
-        
+    }
+
+    public void objectLeft(GameObject lostObject)
+    {
+        if (wantsToBeHeld != null)
+        {
+            if (detectedObjects.Contains(wantsToBeHeld.gameObject))
+            {
+                detectedObjects.Remove(lostObject);
+                Debug.Log("Object left slot: " + selfIndex);
+            }
+
+            wantsToBeHeld.beingSlotted = false;
+            wantsToBeHeld.submitToTaker = false;
+            heldItem = null;
+            wantsToBeHeld = null;
+            slotType?.Invoke();
+        }
     }
 
 }
