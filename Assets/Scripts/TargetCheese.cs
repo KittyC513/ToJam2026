@@ -26,8 +26,8 @@ public class TargetCheese : MonoBehaviour
 
     public void Weigh()
     {
-        cheeseSize = GameManager.Instance.cheeseList[0].cheeseSize;
-        cheeseWeight = maxCheeseWeight * cheeseSize;
+        if(cheeseWeight != null)
+            cheeseWeight = maxCheeseWeight * cheeseSize;
         Debug.Log("Cheese weight: " + cheeseWeight);
     }
 

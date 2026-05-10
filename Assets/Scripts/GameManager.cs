@@ -46,4 +46,13 @@ public class GameManager : MonoBehaviour
         isSelected = false;
     }
 
+    public void ResetGame()
+    {
+        cheeseList.Clear();
+        sliceList.Clear();
+        cheeseIndex = 0;
+        sliceCount = 0;
+        isSelected = false;
+    }
+
 }

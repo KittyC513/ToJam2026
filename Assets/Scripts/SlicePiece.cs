@@ -14,13 +14,26 @@ public class SlicePiece : MonoBehaviour
 
     public int sliceIndex;
 
+    private bool dragging;
+
+    private Vector3 offset;
+
+    public bool isOnCutting;
+
+    public float cheeseSize;
+
+    public TargetCheese targetCheese;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        targetCheese.cheeseSize = cheeseSize;
         outline.SetActive(false);
         GameManager.Instance.sliceList.Add(this);
 
         sliceIndex = GameManager.Instance.sliceList.Count - 1;
+        if (GameManager.Instance.cheeseList.Count < 1) return;
+            cheeseSize = GameManager.Instance.cheeseList[sliceIndex].cheeseSize;
     }
 
     // Update is called once per frame
@@ -30,6 +43,40 @@ public class SlicePiece : MonoBehaviour
         {
             outline.SetActive(false);
         }
+
+        //Vector3 mouseWorld =
+        //    Camera.main.ScreenToWorldPoint(
+        //        Input.mousePosition
+        //    );
+
+        //mouseWorld.z = 0;
+
+        //// START DRAG
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    RaycastHit2D hit = Physics2D.Raycast(mouseWorld,Vector2.zero);
+
+        //    if (hit.collider != null &&
+        //       hit.collider.gameObject == gameObject)
+        //    {
+        //        dragging = true;
+
+        //        offset = transform.position - mouseWorld;
+        //    }
+        //}
+
+        //// DRAGGING
+        //if (dragging)
+        //{
+        //    transform.position = mouseWorld + offset;
+            
+        //}
+
+        //// STOP DRAG
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    dragging = false;
+        //}
     }
 
     private void OnMouseEnter()
@@ -52,6 +99,12 @@ public class SlicePiece : MonoBehaviour
         {
             GameManager.Instance.IsSelected(sliceIndex);
             timer = 0;
+            GameEvents.OnSecondCut?.Invoke();
+            if (isOnCutting)
+            {
+                GameEvents.OnCheeseCut();
+            }
         }
     }
+
 }
