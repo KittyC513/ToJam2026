@@ -5,9 +5,17 @@ public class GameManager : MonoBehaviour
 {
     public List<CuttingFeature> cheeseList = new List<CuttingFeature>();
 
+    public List<SlicePiece> sliceList = new List<SlicePiece>();
+
+    public int cheeseIndex = 0;
+
+    public bool isSelected;
+
     public int sliceCount = 0;
 
     private static GameManager instance;
+
+    public float requiredCutAmount = 0.5f;
 
     public static GameManager Instance
     {
@@ -26,6 +34,16 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void IsSelected(int index)
+    {
+        isSelected = true;
+    }
+
+    public void Deselect(int index)
+    {
+        isSelected = false;
     }
 
 }

@@ -232,6 +232,7 @@ MonoBehaviour:
   cheeseSize: 1
   cheeseIndex: 0
   outwardForce: 45
+  radius: 0
 --- !u!114 &6059306551277767404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +574,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hovering: 0
+  rectTransform: {fileID: 3375293799089252956}
+  radialBar: {fileID: 8756284812396285442}
+  cuttingFeature: {fileID: 5772902176885998898}
+  radius: 0
 --- !u!114 &2479352827668137680
 MonoBehaviour:
   m_ObjectHideFlags: 0

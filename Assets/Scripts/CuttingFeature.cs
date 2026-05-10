@@ -28,6 +28,8 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     public float outwardForce = 60f;
 
+    public float radius;
+
 
     private void Start()
     {
@@ -97,6 +99,8 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
             //Reset();
             return;
         }
+
+        radius = angleDifference;
 
         radialBar = fillBar;
         //radialBar.fillAmount = 1 - (angleDifference / 360);
@@ -182,5 +186,7 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         radialBar.fillAmount = cutAmount;
 
         cheeseSize = cheessBar.fillAmount;
+
+        radius = cheeseSize * 360f;
     }
 }
