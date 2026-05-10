@@ -28,13 +28,15 @@ public class SlicePiece : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        targetCheese.cheeseSize = cheeseSize;
+     
         outline.SetActive(false);
         GameManager.Instance.sliceList.Add(this);
+       
 
         sliceIndex = GameManager.Instance.sliceList.Count - 1;
-        if (GameManager.Instance.cheeseList.Count < 1) return;
-            cheeseSize = GameManager.Instance.cheeseList[sliceIndex].cheeseSize;
+        
+        //if (GameManager.Instance.cheeseList.Count < 1) return;
+        //    cheeseSize = GameManager.Instance.cheeseList[sliceIndex].cheeseSize;
     }
 
     // Update is called once per frame
@@ -43,6 +45,14 @@ public class SlicePiece : MonoBehaviour
         if(!GameManager.Instance.isSelected && !isHovering)
         {
             outline.SetActive(false);
+        }
+
+        if(cheeseSize == 0)
+        {
+            if(sliceIndex == 0)
+                cheeseSize = GameManager.Instance.cheeseList[0].cheeseSize;
+            else if(sliceIndex == 1)
+                cheeseSize = 1 - GameManager.Instance.cheeseList[0].cheeseSize;
         }
 
         //Vector3 mouseWorld =
@@ -70,7 +80,7 @@ public class SlicePiece : MonoBehaviour
         //if (dragging)
         //{
         //    transform.position = mouseWorld + offset;
-            
+
         //}
 
         //// STOP DRAG
