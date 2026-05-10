@@ -486,7 +486,7 @@ RectTransform:
   m_Father: {fileID: 1414964722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1052,7 +1052,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &450422837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1592,6 +1592,8 @@ MonoBehaviour:
   cheeseIndex: 0
   outwardForce: 45
   radius: 0
+  isSecondCut: 0
+  cheeseImage: {fileID: 46077637}
 --- !u!114 &1217235143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1689,8 +1691,12 @@ MonoBehaviour:
   canvas: {fileID: 450422840}
   piece_left: {fileID: 429381977}
   piece_right: {fileID: 424287571}
+  piece_left_outline: {fileID: 24491234}
+  piece_right_outline: {fileID: 1992571783}
   targetCheese: {fileID: 757073301}
   cuttingFeature: {fileID: 0}
+  sliceObj: {fileID: 0}
+  isSecondCut: 0
 --- !u!4 &1429781249
 Transform:
   m_ObjectHideFlags: 0

@@ -79,12 +79,12 @@ public class HoverDetection : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (validHover)
         {
             outline.enabled = true;
-            Debug.Log("Mouse is hovering over the valid area");
+            //Debug.Log("Mouse is hovering over the valid area");
         }
         else
         {
             outline.enabled = false;
-            Debug.Log("Mouse is NOT hovering over the valid area");
+            //Debug.Log("Mouse is NOT hovering over the valid area");
         }
     }
 

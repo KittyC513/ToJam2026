@@ -26,8 +26,8 @@ public class TargetCheese : MonoBehaviour
 
     public void Weigh()
     {
-        if(cheeseWeight != null)
-            cheeseWeight = maxCheeseWeight * cheeseSize;
+
+        cheeseWeight = maxCheeseWeight * cheeseSize;
         Debug.Log("Cheese weight: " + cheeseWeight);
     }
 

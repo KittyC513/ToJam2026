@@ -13,10 +13,16 @@ public class SceneControl : MonoBehaviour
 
     public SpriteRenderer piece_left;
     public SpriteRenderer piece_right;
+    public SpriteRenderer piece_left_outline;
+    public SpriteRenderer piece_right_outline;
 
     public TargetCheese targetCheese;
     public CuttingFeature cuttingFeature;
- 
+
+    public GameObject sliceObj;
+
+    public bool isSecondCut;
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,8 +59,11 @@ public class SceneControl : MonoBehaviour
                 break;
 
         }
-        GameObject slice = Instantiate(cheeseObj, canvas);
-        GameEvents.OnCuttingBoard?.Invoke();
+        sliceObj = Instantiate(cheeseObj, canvas);
+        cuttingFeature = sliceObj.GetComponent<CuttingFeature>();
+
+        if (!isSecondCut)
+            GameEvents.OnCuttingBoard?.Invoke();
     }
 
     public void OnCheeseCut()
@@ -62,32 +71,41 @@ public class SceneControl : MonoBehaviour
         canvas.gameObject.SetActive(true);
         piece_left.enabled = false;
         piece_right.enabled = false;
+        piece_left_outline.enabled = false;
+        piece_right_outline.enabled = false;
     }
 
     public void OnSecondCut()
     {
+        isSecondCut = true;
         StartCoroutine(TransitionToCuttingPhase(0.3f));
-
     }
     public void OnCuttingBoard()
     {
         StartCoroutine(WaitForCut(0.5f));
+
     }
     IEnumerator WaitForCut(float timer)
     {
         yield return new WaitForSeconds(timer);
-        canvas.gameObject.SetActive(false);
+
         piece_left.enabled = true;
         piece_right.enabled = true;
+        piece_left_outline.enabled = true;
+        piece_right_outline.enabled = true;
+
+        canvas.gameObject.SetActive(false);
     }
 
     IEnumerator TransitionToCuttingPhase(float timer)
     {
         yield return new WaitForSeconds(timer);
         canvas.gameObject.SetActive(true);
-        SliceCheese(1);
-
+        //SliceCheese(1);
         piece_left.enabled = false;
         piece_right.enabled = false;
+        piece_left_outline.enabled = false;
+        piece_right_outline.enabled = false;
+        isSecondCut = false;
     }
 }

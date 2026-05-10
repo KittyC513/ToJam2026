@@ -24,6 +24,7 @@ public class SlicePiece : MonoBehaviour
 
     public TargetCheese targetCheese;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -100,11 +101,15 @@ public class SlicePiece : MonoBehaviour
             GameManager.Instance.IsSelected(sliceIndex);
             timer = 0;
             GameEvents.OnSecondCut?.Invoke();
+            GameManager.Instance.cheeseList[0].cheeseSize = cheeseSize;
+            GameManager.Instance.cheeseList[1].cheeseImage.enabled = false;
+
             if (isOnCutting)
             {
                 GameEvents.OnCheeseCut();
             }
         }
+
     }
 
 }

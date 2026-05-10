@@ -233,6 +233,8 @@ MonoBehaviour:
   cheeseIndex: 0
   outwardForce: 45
   radius: 0
+  isSecondCut: 0
+  cheeseImage: {fileID: 8756284812396285442}
 --- !u!114 &6059306551277767404
 MonoBehaviour:
   m_ObjectHideFlags: 0

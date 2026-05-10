@@ -55,4 +55,12 @@ public class GameManager : MonoBehaviour
         isSelected = false;
     }
 
+    public void NextCheese()
+    {
+        for (int i = 0; i < cheeseList.Count - 1; i++)
+        {
+            cheeseList[i].gameObject.SetActive(false);
+        }
+    }
+
 }

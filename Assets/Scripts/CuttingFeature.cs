@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -30,9 +31,19 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     public float radius;
 
+    public bool isSecondCut;
 
+    public Image cheeseImage;
+
+
+    private void OnEnable()
+    {
+        staticLine.GetComponent<Image>().enabled = true;
+        cuttingLine.GetComponent<Image>().enabled = true;
+    }
     private void Start()
     {
+
         GameManager.Instance.cheeseList.Add(this);
         cheeseIndex = GameManager.Instance.sliceCount;
         GameManager.Instance.sliceCount += 1;
@@ -83,6 +94,27 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
     {
         if(isCutting && radialBar != null) 
             Cut();
+
+        //if (isSecondCut)
+        //{
+        //    cheeseSize = SceneControl.instance.targetCheese.cheeseSize;
+        //    radialBar = cheessBar;
+        //    radialBar.fillAmount = radialBar.fillAmount;
+        //    fill = radialBar.rectTransform;
+            
+        //    foreach (var cheese in GameManager.Instance.cheeseList)
+        //    {
+        //        if (!GameManager.Instance.cheeseList[cheeseIndex])
+        //        {
+        //            cheeseImage.enabled = false;
+        //            Debug.Log("Cheese " + cheeseIndex + " deactivated");
+        //        }
+        //    }
+
+        //    staticLine.GetComponent<Image>().enabled = true;
+        //    cuttingLine.GetComponent<Image>().enabled = true;
+        //    isSecondCut = false;
+        //}
     }
 
     void Cut()
@@ -111,7 +143,10 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         {
             CheeseCutCheck();
             isCutting = false;
-        }            
+            //StartCoroutine(OnCut());
+        }
+        
+
     }
 
     void Reset()
@@ -159,7 +194,9 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
         if(GameManager.Instance.cheeseList.Count > 1)
         {
-            cutAmount = 1 - GameManager.Instance.cheeseList[cheeseIndex - 1].cheeseSize;
+            cutAmount = cheeseSize - GameManager.Instance.cheeseList[cheeseIndex].cheeseSize;
+            Debug.Log("Cheese Size: " + cheeseSize);
+            Debug.Log("Previous Cheese Size: " + GameManager.Instance.cheeseList[cheeseIndex].cheeseSize);
             Debug.Log("Cut Amount: " + cutAmount);
 
             if (cutAmount < 0.5f)
@@ -179,8 +216,9 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
             cheese.anchoredPosition += outward;
 
 
-            staticLine.gameObject.SetActive(false);
-            cuttingLine.gameObject.SetActive(false);
+            staticLine.GetComponent<Image>().enabled = false;
+            cuttingLine.GetComponent<Image>().enabled = false;
+
         }
 
         radialBar.fillAmount = cutAmount;
@@ -188,5 +226,20 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         cheeseSize = cheessBar.fillAmount;
 
         radius = cheeseSize * 360f;
+
+        
+    }
+
+    IEnumerator OnCut()
+    {
+        yield return new WaitForSeconds(1f);
+
+        foreach (var slice in GameManager.Instance.sliceList)
+        {
+            if (!slice.isOnCutting)
+            {
+                cheeseImage.enabled = false;
+            }
+        }
     }
 }
