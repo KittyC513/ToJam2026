@@ -35,15 +35,11 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     public Image cheeseImage;
 
+    public SlotScript slotScript;
 
     private void OnEnable()
     {
-        staticLine.GetComponent<Image>().enabled = true;
-        cuttingLine.GetComponent<Image>().enabled = true;
-        cheeseImage.enabled = true;
 
-        if(GameManager.Instance.cheeseList[cheeseIndex - 1] != null)
-            cheeseSize = 1 - GameManager.Instance.cheeseList[cheeseIndex-1].cheeseSize;
     }
     private void Start()
     {
@@ -130,21 +126,23 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
         float angleDifference = (staticAngle - cuttingAngle + 360f) % 360f;
 
-        if(angleDifference <= 10)
+        if (angleDifference <= 10)
         {
             //Reset();
             return;
         }
-
         radius = angleDifference;
-
         radialBar = fillBar;
         //radialBar.fillAmount = 1 - (angleDifference / 360);
         radialBar.fillAmount = angleDifference / 360;
+        //Cut Amount% = Fill Amount
         cutAmount = radialBar.fillAmount;
+        
+
         // If the mouse left button is released, consider the cut is done
         if (Input.GetMouseButtonUp(0))
         {
+            calculateHalves(cutAmount);
             CheeseCutCheck();
             isCutting = false;
             //StartCoroutine(OnCut());
@@ -186,7 +184,7 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
             staticLine.GetComponent<Image>().enabled = false;
             cuttingLine.GetComponent<Image>().enabled = false;
 
-            SceneControl.instance.SliceCheese(1);
+//            SceneControl.instance.SliceCheese(1);
 
         }
     }
@@ -229,13 +227,27 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
         }
 
+
+
         radialBar.fillAmount = cutAmount;
 
         cheeseSize = cheessBar.fillAmount;
 
         radius = cheeseSize * 360f;
 
-        
+    }
+
+    public void calculateHalves(float cutAmount) 
+    { 
+        float remainder = 1 - cutAmount;
+        if (cutAmount > remainder)
+        {
+            slotScript.setCutSize(cutAmount, remainder);
+        }
+        else if(cutAmount <= remainder)
+        {
+            slotScript.setCutSize(remainder, cutAmount);
+        }
     }
 
     IEnumerator OnCut()

@@ -9,6 +9,10 @@ public class CustomerRequestController : MonoBehaviour
 
     public static float leeway;
 
+    public static Vector2 swissCount;
+
+    public static Vector2 brieCount;
+
     [SerializeField]
     // x = min / y = max
     private Vector2 brieLimits;

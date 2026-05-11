@@ -33,6 +33,8 @@ public class SlotScript : MonoBehaviour
 
     public float toBeCut = 0;
 
+    public bool hasCloned = false;
+
     private List<GameObject> detectedObjects = new List<GameObject>();
 
     void Start()
@@ -93,9 +95,16 @@ public class SlotScript : MonoBehaviour
     {
         if(wantsToBeHeld != null)
         {
+
             if (wantsToBeHeld.GetComponent<ObjectMovementScript>() && collision.gameObject == wantsToBeHeld.gameObject)
             {
                 objectLeft(wantsToBeHeld.gameObject);
+
+                if (hasCloned == true && this.objectType == 24)
+                {
+                    hasCloned = false;
+                    controllerCut.originalRemoved = true;
+                }
             }
         }
     }
@@ -118,21 +127,50 @@ public class SlotScript : MonoBehaviour
         }
     }
 
+    public void cutTheCheese()
+    {
+        if (this.objectType == 24 && hasCloned == false)
+        {
+            hasCloned = true;
+        }
+    }
+
     // pushed by cutting board
     public void NewCheese(GameObject gameObject, float newSize)
     {
-        if (objectType == 25 && slotToClone != null)
+        Debug.Log("Clone Logic Initiated");
+        if (objectType == 25 && slotToClone == null)
         {
-            slotToClone = Instantiate(gameObject, this.transform);
+
+            slotToClone = Instantiate(gameObject, gameObject.transform.parent);
+            slotToClone.name = ("");
             heldItem = slotToClone.GetComponent<ObjectMovementScript>();
+            heldItem.currentWedgeSize = newSize;
+            heldItem.transform.position = this.transform.position;
             wantsToBeHeld = heldItem;
             heldItem.controlTaken = this;
+
+            if (heldItem.objectType == 1)
+            {
+                float currentCount = CustomerRequestController.swissCount.x;
+                currentCount = currentCount + 1;
+                heldItem.name = ("Swiss" + currentCount);
+
+            }
+            else if (heldItem.objectType == 2)
+            {
+                float currentCount = CustomerRequestController.brieCount.x;
+                currentCount = currentCount + 1;
+                heldItem.name = ("Brie" + currentCount);
+            }
+
         }
     }
 
     // requested by cutting board
     public float GiveCheese()
     {
+        Debug.Log("floatSent");
         if (objectType == 24 && heldItem != null)
         {
             return toBeCut;
@@ -143,12 +181,17 @@ public class SlotScript : MonoBehaviour
         }
     }
 
-    //Called by cut script
+    // Called by cut script
     public void setCutSize(float forMe,float forYou)
     {
-        toBeCut = forYou;
-        heldItem.currentWedgeSize = forMe;
-        controllerCut.giveDataToClone();
+        Debug.Log("Data Recieved: " + forMe + " | " + forYou); ;
+        if (forMe != 1 || forYou != 1)
+        {
+            Debug.Log("Sent to Board");
+            toBeCut = forYou;
+            heldItem.currentWedgeSize = forMe;
+            controllerCut.giveDataToClone();
+        }
 
     }
 }
