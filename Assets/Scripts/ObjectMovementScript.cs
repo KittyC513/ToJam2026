@@ -35,9 +35,10 @@ public class ObjectMovementScript : MonoBehaviour
     {
         if (isSelected)
         {
+
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector3 offset = new Vector3(targetPivot.x, targetPivot.y, 0);
-            Vector3 truePos = new Vector3(thisRB.position.x - offset.x,thisRB.position.y - offset.y,0);
+           // Vector3 offset = new Vector3(targetPivot.x, targetPivot.y, 0);
+            Vector3 truePos = new Vector3(thisRB.position.x,thisRB.position.y,0);
             Vector2 direction = (mousePosition - truePos);
             Vector2 dampener = -thisRB.linearVelocity * dampen;
 
@@ -122,9 +123,9 @@ public class ObjectMovementScript : MonoBehaviour
         isSelected = true;
 
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 worldPosition = this.transform.InverseTransformPoint(mousePosition);
-        targetPivot.x = worldPosition.x;
-        targetPivot.y = worldPosition.y;
+       // Vector3 worldPosition = this.transform.InverseTransformPoint(mousePosition);
+        targetPivot.x = mousePosition.x;
+        targetPivot.y = mousePosition.y;
 
         thisRB.constraints = RigidbodyConstraints2D.None;
 

@@ -59,9 +59,11 @@ public class DigitalScale : MonoBehaviour
             if (isChild.heldItem != null)
             {
                 // change to actual script
-                if (isChild.heldItem.GetComponent<TempCheese>())
+                if (isChild.heldItem.transform.parent.GetComponent<TempCheese>())
                 {
-                    currentWeight = isChild.heldItem.GetComponent<TempCheese>().tempCheeseWeight;
+                    currentWeight = isChild.heldItem.transform.parent.GetComponent<TempCheese>().tempCheeseWeight;
+                    currentWeight = currentWeight * isChild.heldItem.currentWedgeSize;
+                    currentWeight = Mathf.Round(currentWeight);
                     displayCurrentWeight();
                 }
             }

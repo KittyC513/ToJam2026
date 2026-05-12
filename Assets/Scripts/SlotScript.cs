@@ -146,7 +146,7 @@ public class SlotScript : MonoBehaviour
             slotToClone.name = ("");
             heldItem = slotToClone.GetComponent<ObjectMovementScript>();
             heldItem.currentWedgeSize = newSize;
-            heldItem.transform.position = this.transform.position;
+            heldItem.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -3);
             wantsToBeHeld = heldItem;
             heldItem.controlTaken = this;
 
