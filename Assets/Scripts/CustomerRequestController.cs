@@ -1,13 +1,27 @@
 using UnityEngine;
 using Unity.Mathematics;
 using Random = UnityEngine.Random;
+using System;
+using System.Linq;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class CustomerRequestController : MonoBehaviour
 {
+
+    public GameObject swissPrefab;
+    public GameObject briePrefab;
+
+    // x = success / y = failure 
+
+    [SerializeField]
+    private Vector2 score = new Vector2(0,0);
+
     // x = cheese type / y = cheese weight
+
     public static Vector2 currentRequest;
 
-    public static float leeway;
+    public static float leeway = 10f;
 
     public static Vector2 swissCount;
 
@@ -15,28 +29,65 @@ public class CustomerRequestController : MonoBehaviour
 
     [SerializeField]
     // x = min / y = max
-    private Vector2 brieLimits;
+    public static Vector2 brieLimits;
     [SerializeField]
     // x = min / y = max
-    private Vector2 swissLimits;
+    public static Vector2 swissLimits;
+
+    // CHANGE BACK TO .08
+    static public float refreashWheelThreshold = -1f;
 
     [SerializeField]
-    private bool requestedCheese;
+    public bool requestedCheese;
+
+    private float currentSwissSize;
+
+    private float currentBrieSize;
+
+    private float lastSwissSize;
+
+    private float lastBrieSize;
+
+    public GameObject brieWheel;
+    public GameObject swissWheel;
+
+    public SlotScript[] brieSlots;
+    public SlotScript[] swissSlots;
+    public SlotScript[] otherSlots;
 
     void Start()
     {
-        newRequestTest();
+        currentBrieSize = CalculateBrieSize();
+        lastBrieSize = currentBrieSize;
+
+        currentSwissSize = CalculateSwissSize();
+        lastSwissSize = currentSwissSize;
+
+        NewRequestTest();
+        //       CalculateBrieSize();
+        Debug.Log("Calculated Swiss: " + CalculateSwissSize());
     }
 
     void Update()
     {
-        
+
+        if (lastSwissSize != currentSwissSize)
+        {
+            lastSwissSize = currentSwissSize;
+
+
+        }
+        else if (lastBrieSize != currentBrieSize)
+        {
+            lastBrieSize = currentBrieSize;
+
+        }
+
     }
 
-    void newRequestTest()
+    void NewRequestTest()
     {
         float coinFlip = Random.value;
-        Debug.Log("RandomResult: " + coinFlip);
 
         if (coinFlip > .5f) 
         { 
@@ -51,15 +102,152 @@ public class CustomerRequestController : MonoBehaviour
 
         if (requestedCheese)
         {
-            currentRequest = new Vector2(requestedCheese ? 1.0f : 0.0f, Random.Range(swissLimits.x, swissLimits.y));
+            currentRequest = new Vector2(requestedCheese ? 1.0f : 0.0f, Random.Range(swissLimits.x, (swissWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateSwissSize())));
         }
         else if (!requestedCheese)
         {
-            currentRequest = new Vector2(requestedCheese ? 1.0f : 0.0f, Random.Range(brieLimits.x, brieLimits.y));
+            currentRequest = new Vector2(requestedCheese ? 1.0f : 0.0f, Random.Range(brieLimits.x, (brieWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateBrieSize())));
         }
-        Debug.Log("Run Test");
 
         Debug.Log("Type: " + currentRequest.x + " Weight: " + currentRequest.y);
+
+    }
+
+    private float CalculateBrieSize()
+    {
+        currentBrieSize = 1;
+
+        ObjectMovementScript[] cheeseWheelArray = Array.Empty<ObjectMovementScript>();
+        cheeseWheelArray = brieWheel.GetComponentsInChildren<ObjectMovementScript>();
+
+        for (int i = 0; i < cheeseWheelArray.Length; i++) 
+        {
+            currentBrieSize = currentBrieSize - cheeseWheelArray[i].currentWedgeSize;
+        }
+        Debug.Log("Current Brie Sold: " +currentBrieSize);
+
+        return currentBrieSize;
+    }
+
+    private float CalculateSwissSize()
+    {
+        currentSwissSize = 1;
+
+        ObjectMovementScript[] cheeseWheelArray = Array.Empty<ObjectMovementScript>();
+        cheeseWheelArray = swissWheel.GetComponentsInChildren<ObjectMovementScript>();
+
+        for (int i = 0; i < cheeseWheelArray.Length; i++)
+        {
+            currentSwissSize = currentSwissSize - cheeseWheelArray[i].currentWedgeSize;
+        }
+        Debug.Log("Current Swiss Sold: " + currentSwissSize);
+
+        return currentSwissSize;
+
+    }
+
+    public void OrderResult(int result)
+    {
+        Debug.Log("Result Ran");
+
+
+        if (result == 1)
+        {
+            Debug.Log("Refresh Swiss Called");
+            score.x = score.x + 1;
+            RefreashWheelCheck(result);
+        }
+        else if (result == 2)
+        {
+            Debug.Log("Refresh Brie Called");
+            score.y = score.y + 1;
+            RefreashWheelCheck(result);
+        }
+        
+    }
+
+    public void RefreashWheelCheck(int type)
+    {
+        if (type == 1 && CalculateSwissSize() > refreashWheelThreshold)
+        {
+            Debug.Log("Destroyed children swiss");
+            swissCount.y += 1;
+
+            int nbChildren = swissWheel.transform.childCount;
+
+            for (int i = nbChildren - 1; i >= 0; i--)
+            {
+                DestroyImmediate(swissWheel.transform.GetChild(i).gameObject);
+            }
+
+            if (swissSlots != null)
+            {
+                for (int i = 0;i < swissSlots.Length; i++)
+                {
+                    swissSlots[i].ResetSlot();
+
+                }
+
+                GameObject newCheese = Instantiate<GameObject>(swissPrefab, swissWheel.transform);
+                newCheese.transform.position = new Vector3(swissSlots[0].transform.position.x, swissSlots[0].transform.position.y, -3);
+                swissSlots[0].heldItem = newCheese.GetComponent<ObjectMovementScript>();
+                swissSlots[0].wantsToBeHeld = swissSlots[0].heldItem;
+                swissSlots[0].heldItem.controlTaken = swissSlots[0];
+                swissSlots[0].transform.gameObject.name = ("Swiss" + swissCount.x);
+                swissSlots[0].heldItem.beingSlotted = true;
+                swissSlots[0].heldItem.submitToTaker = true;
+
+                swissWheel.GetComponent<TempCheese>().tempCheeseWeight = Random.Range(swissLimits.x,  swissLimits.y);
+
+            }
+
+        }
+        else if (type == 2 && CalculateBrieSize() > refreashWheelThreshold)
+        {
+            Debug.Log("Destroyed children brie");
+            brieCount.y += 1;
+
+            int nbChildren = brieWheel.transform.childCount;
+
+            for (int i = nbChildren - 1; i >= 0; i--)
+            {
+                DestroyImmediate(brieWheel.transform.GetChild(i).gameObject);
+            }
+
+            if (brieSlots != null)
+            {
+                for (int i = 0; i < brieSlots.Length; i++)
+                {
+                    brieSlots[i].ResetSlot();
+                }
+
+                GameObject newCheese = Instantiate<GameObject>(briePrefab, brieWheel.transform);
+                newCheese.transform.position = new Vector3(brieSlots[0].transform.position.x, brieSlots[0].transform.position.y, -3);
+                brieSlots[0].heldItem = newCheese.GetComponent<ObjectMovementScript>();
+                brieSlots[0].wantsToBeHeld = brieSlots[0].heldItem;
+                brieSlots[0].heldItem.controlTaken = brieSlots[0];
+                brieSlots[0].transform.gameObject.name = ("Brie" + brieCount.x);
+                brieSlots[0].heldItem.beingSlotted = true;
+                brieSlots[0].heldItem.submitToTaker = true;
+
+                brieWheel.GetComponent<TempCheese>().tempCheeseWeight = Random.Range(brieLimits.x, brieLimits.y);
+            }
+        }
+        if (otherSlots != null)
+        {
+            for(int i = 0; i < otherSlots.Length; i++)
+            {
+                if(otherSlots[i].heldItem != null)
+                {
+                    if (otherSlots[i].heldItem.objectType == type)
+                    {
+                        otherSlots[i].ResetSlot();
+                    }
+                }
+            }
+        }
+
+        NewRequestTest();
 
     }
 

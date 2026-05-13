@@ -9,7 +9,7 @@ public class ShelfSlots : MonoBehaviour
     public slotOpenedEvent mySlotEvent;
 
 
-    public SlotScript[] isChild =  Array.Empty<SlotScript>();
+    static public SlotScript[] isChild =  Array.Empty<SlotScript>();
 
 
     public SlotScript firstFree = null;

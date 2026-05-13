@@ -168,6 +168,7 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         }
         else
         {
+            if (fillBar != null) {
             radialBar = cheessBar;
             fillBar.enabled = false;
 
@@ -184,8 +185,8 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
             staticLine.GetComponent<Image>().enabled = false;
             cuttingLine.GetComponent<Image>().enabled = false;
 
-//            SceneControl.instance.SliceCheese(1);
-
+            //            SceneControl.instance.SliceCheese(1);
+        }
         }
     }
 

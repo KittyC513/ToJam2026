@@ -15,6 +15,8 @@ public class ObjectMovementScript : MonoBehaviour
     public float forceEmit = 5f;
     public float dampen = 1f;
 
+    public bool isSold = false;
+
     [Tooltip("Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500")]
     // Swiss = 1 // Brie = 2 // Weight1 = 50 // Weight2 = 100 // weight3 = 250 // weight4 = 500
     public int objectType;
@@ -131,6 +133,11 @@ public class ObjectMovementScript : MonoBehaviour
 
         if (controlTaken != null)
         {
+            if(controlTaken.objectType == 25)
+            {
+                controlTaken.wasCloned = false;
+                controlTaken.controllerCut.newRemoved = true;
+            }
             controlTaken.objectLeft(this.gameObject);
             controlTaken = null;
 
@@ -145,6 +152,11 @@ public class ObjectMovementScript : MonoBehaviour
         Debug.Log("9 Alert");
         isSelected = false;
         controlTaken = slot;
+    }
+
+    public void SelfDestruct()
+    {
+        DestroyImmediate(this.gameObject);
     }
 
 }

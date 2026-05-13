@@ -35,6 +35,8 @@ public class SlotScript : MonoBehaviour
 
     public bool hasCloned = false;
 
+    public bool wasCloned = false;
+
     private List<GameObject> detectedObjects = new List<GameObject>();
 
     void Start()
@@ -105,6 +107,7 @@ public class SlotScript : MonoBehaviour
                     hasCloned = false;
                     controllerCut.originalRemoved = true;
                 }
+
             }
         }
     }
@@ -139,6 +142,8 @@ public class SlotScript : MonoBehaviour
     public void NewCheese(GameObject gameObject, float newSize)
     {
         Debug.Log("Clone Logic Initiated");
+        Debug.Log("ObjectName: " + gameObject);
+        Debug.Log("newSize" + newSize);
         if (objectType == 25 && slotToClone == null)
         {
 
@@ -149,6 +154,7 @@ public class SlotScript : MonoBehaviour
             heldItem.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, -3);
             wantsToBeHeld = heldItem;
             heldItem.controlTaken = this;
+            wasCloned = true;
 
             if (heldItem.objectType == 1)
             {
@@ -163,7 +169,7 @@ public class SlotScript : MonoBehaviour
                 currentCount = currentCount + 1;
                 heldItem.name = ("Brie" + currentCount);
             }
-
+            slotToClone = null;
         }
     }
 
@@ -193,5 +199,12 @@ public class SlotScript : MonoBehaviour
             controllerCut.giveDataToClone();
         }
 
+    }
+
+    public void ResetSlot()
+    {
+        this.heldItem = null;
+        this.wantsToBeHeld = null;
+        this.detectedObjects = new List<GameObject>();
     }
 }

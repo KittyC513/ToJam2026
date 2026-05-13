@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CuttingBoardController : MonoBehaviour
@@ -12,9 +13,13 @@ public class CuttingBoardController : MonoBehaviour
 
     public bool originalRemoved = true;
 
+    public bool newRemoved = true;
+
     public GameObject objectToGive;
 
     public GameObject cuttingCheese;
+
+    public GameObject testPrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -54,17 +59,26 @@ public class CuttingBoardController : MonoBehaviour
     {
         if (isChild[0] != null)
         {
-            if (isChild[0].hasCloned == false && isChild[0].heldItem != false && originalRemoved != false)
+
+            if (isChild[0].hasCloned == false && isChild[0].heldItem != false && originalRemoved != false && newRemoved != false)
             {
                 enableBoard();
+            }
+            else
+            {
+                Debug.Log("Has cloned" + isChild[0].hasCloned);
+                Debug.Log("Has is holding" + isChild[0].heldItem);
+                Debug.Log("Has slot 2 empty" + originalRemoved);
             }
         }
     }
 
     public void enableBoard()
     {
+        InstantiateBoard();
         cuttingCheese.SetActive(true);
         originalRemoved = false;
+        newRemoved = false;
     }
 
     public void giveDataToClone()
@@ -79,8 +93,16 @@ public class CuttingBoardController : MonoBehaviour
 
         if (cuttingCheese != null)
         {
-                cuttingCheese.SetActive(false);
+              //  cuttingCheese.SetActive(false);
+              DestroyImmediate(cuttingCheese);
         }
+    }
+
+    public void InstantiateBoard()
+    {
+        cuttingCheese = Instantiate<GameObject>(testPrefab,this.gameObject.transform.parent);
+        cuttingCheese.GetComponentInChildren<CuttingFeature>().slotScript = this.transform.GetComponentInChildren<SlotScript>();
+
     }
 
 }
