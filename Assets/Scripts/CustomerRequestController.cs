@@ -19,7 +19,7 @@ public class CustomerRequestController : MonoBehaviour
 
     // x = cheese type / y = cheese weight
 
-    public static Vector2 currentRequest;
+    public Vector2 currentRequest;
 
     public static float leeway = 10f;
 
@@ -29,13 +29,13 @@ public class CustomerRequestController : MonoBehaviour
 
     [SerializeField]
     // x = min / y = max
-    public static Vector2 brieLimits;
+    public Vector2 brieLimits;
     [SerializeField]
     // x = min / y = max
-    public static Vector2 swissLimits;
+    public Vector2 swissLimits;
 
-    // CHANGE BACK TO .08
-    static public float refreashWheelThreshold = -1f;
+    // CHANGE BACK TO .8
+    static public float refreashWheelThreshold = .8f;
 
     [SerializeField]
     public bool requestedCheese;
@@ -102,11 +102,11 @@ public class CustomerRequestController : MonoBehaviour
 
         if (requestedCheese)
         {
-            currentRequest = new Vector2(requestedCheese ? 1.0f : 0.0f, Random.Range(swissLimits.x, (swissWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateSwissSize())));
+            currentRequest = new Vector2(1, Random.Range(swissLimits.x, (swissWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateSwissSize())));
         }
         else if (!requestedCheese)
         {
-            currentRequest = new Vector2(requestedCheese ? 1.0f : 0.0f, Random.Range(brieLimits.x, (brieWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateBrieSize())));
+            currentRequest = new Vector2(2, Random.Range(brieLimits.x, (brieWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateBrieSize())));
         }
 
         Debug.Log("Type: " + currentRequest.x + " Weight: " + currentRequest.y);
@@ -153,22 +153,41 @@ public class CustomerRequestController : MonoBehaviour
 
         if (result == 1)
         {
-            Debug.Log("Refresh Swiss Called");
+//            Right Answer
             score.x = score.x + 1;
-            RefreashWheelCheck(result);
         }
         else if (result == 2)
         {
-            Debug.Log("Refresh Brie Called");
+//            Wrong answer
             score.y = score.y + 1;
-            RefreashWheelCheck(result);
         }
         
     }
 
-    public void RefreashWheelCheck(int type)
+    public void RefreashWheelCheck()
     {
-        if (type == 1 && CalculateSwissSize() > refreashWheelThreshold)
+        if (otherSlots != null)
+        {
+            for (int i = 0; i < otherSlots.Length; i++)
+            {
+                if (otherSlots[i].heldItem != null && currentRequest.x == 1)
+                {
+                    if (otherSlots[i].heldItem.objectType == 1)
+                    {
+                        otherSlots[i].ResetSlot();
+                    }
+                }
+                if (otherSlots[i].heldItem != null && currentRequest.x == 2)
+                {
+                    if (otherSlots[i].heldItem.objectType == 2)
+                    {
+                        otherSlots[i].ResetSlot();
+                    }
+                }
+            }
+        }
+
+        if (currentRequest.x == 1 && CalculateSwissSize() > refreashWheelThreshold)
         {
             Debug.Log("Destroyed children swiss");
             swissCount.y += 1;
@@ -202,7 +221,7 @@ public class CustomerRequestController : MonoBehaviour
             }
 
         }
-        else if (type == 2 && CalculateBrieSize() > refreashWheelThreshold)
+        else if (currentRequest.x == 2 && CalculateBrieSize() > refreashWheelThreshold)
         {
             Debug.Log("Destroyed children brie");
             brieCount.y += 1;
@@ -233,19 +252,7 @@ public class CustomerRequestController : MonoBehaviour
                 brieWheel.GetComponent<TempCheese>().tempCheeseWeight = Random.Range(brieLimits.x, brieLimits.y);
             }
         }
-        if (otherSlots != null)
-        {
-            for(int i = 0; i < otherSlots.Length; i++)
-            {
-                if(otherSlots[i].heldItem != null)
-                {
-                    if (otherSlots[i].heldItem.objectType == type)
-                    {
-                        otherSlots[i].ResetSlot();
-                    }
-                }
-            }
-        }
+
 
         NewRequestTest();
 

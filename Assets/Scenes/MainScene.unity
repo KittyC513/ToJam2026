@@ -467,6 +467,9 @@ MonoBehaviour:
   swissPrefab: {fileID: 4991631483961112085, guid: ffbbc9de546cf5347941df4ff914183d, type: 3}
   briePrefab: {fileID: 6396035801150968490, guid: 6f1f5cbbd82d0464db6452d9d0dfd9d4, type: 3}
   score: {x: 0, y: 0}
+  currentRequest: {x: 0, y: 0}
+  brieLimits: {x: 400, y: 600}
+  swissLimits: {x: 300, y: 800}
   requestedCheese: 0
   brieWheel: {fileID: 291566076}
   swissWheel: {fileID: 1373194835}
@@ -6307,6 +6310,14 @@ PrefabInstance:
     - target: {fileID: 4029441202679634317, guid: 1f0e3dcb64dcac54f89fef402dbcb935, type: 3}
       propertyPath: m_Name
       value: CuttingLogic
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081988984039278750, guid: 1f0e3dcb64dcac54f89fef402dbcb935, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4081988984039278750, guid: 1f0e3dcb64dcac54f89fef402dbcb935, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

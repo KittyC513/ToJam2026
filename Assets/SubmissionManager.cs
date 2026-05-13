@@ -20,12 +20,12 @@ public class SubmissionManager : MonoBehaviour
         {
             if (isChild.heldItem != null)
             {
-                if (isChild.heldItem.objectType == 1 && controller.requestedCheese == true) 
+                if (isChild.heldItem.objectType == controller.currentRequest.x) 
                 { 
                 wasEntered = true;
                     CheckForMatch(true);
                 }
-                else if (isChild.heldItem.objectType == 2 && controller.requestedCheese == false)
+                else if (isChild.heldItem.objectType == controller.currentRequest.x)
                 {
                     CheckForMatch(false);
                 }
@@ -52,16 +52,17 @@ public class SubmissionManager : MonoBehaviour
                 cheeseSize = isChild.heldItem.currentWedgeSize;
                 cheeseWeight = isChild.heldItem.transform.parent.GetComponent<TempCheese>().tempCheeseWeight;
                 float realWeight = Mathf.Round(cheeseWeight * cheeseSize);
-             //   if(realWeight > CustomerRequestController.currentRequest.y + CustomerRequestController.leeway && realWeight < CustomerRequestController.currentRequest.y - CustomerRequestController.leeway)
-                if ( realWeight != -1 && type && controller.requestedCheese)
+                if(realWeight < controller.currentRequest.y + CustomerRequestController.leeway && realWeight > controller.currentRequest.y - CustomerRequestController.leeway && isChild.heldItem.objectType == controller.currentRequest.x)
                     {
                     controller.OrderResult(1);
                 }
-                else if (realWeight != -1 && !type && !controller.requestedCheese)
+                else
                 {
                     controller.OrderResult(2);
+
                 }
                 TakeProduct();
+                controller.RefreashWheelCheck();
                 wasEntered = false;
             }
         }
@@ -69,6 +70,7 @@ public class SubmissionManager : MonoBehaviour
 
     private void TakeProduct()
     {
+        DestroyImmediate(this.isChild.heldItem.gameObject);
         this.isChild.ResetSlot();
     }
 
