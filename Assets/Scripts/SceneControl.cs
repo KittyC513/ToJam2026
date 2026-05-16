@@ -38,7 +38,14 @@ public class SceneControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!EventManager.isCutting)
+        {
+            canvas.gameObject.SetActive(false);
+        }
+        else
+        {
+            canvas.gameObject.SetActive(true);
+        }
     }
 
     public void SliceCheese(int caseNum)

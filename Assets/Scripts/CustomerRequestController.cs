@@ -102,6 +102,7 @@ public class CustomerRequestController : MonoBehaviour
 
         if (requestedCheese)
         {
+            
             currentRequest = new Vector2(1, Random.Range(swissLimits.x, (swissWheel.GetComponent<TempCheese>().tempCheeseWeight * CalculateSwissSize())));
         }
         else if (!requestedCheese)

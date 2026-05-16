@@ -464,28 +464,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1577ed282eb5e544b24edce9d40e3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swissPrefab: {fileID: 4991631483961112085, guid: ffbbc9de546cf5347941df4ff914183d, type: 3}
-  briePrefab: {fileID: 6396035801150968490, guid: 6f1f5cbbd82d0464db6452d9d0dfd9d4, type: 3}
+  swissPrefab: {fileID: 0}
+  briePrefab: {fileID: 0}
   score: {x: 0, y: 0}
   currentRequest: {x: 0, y: 0}
   brieLimits: {x: 400, y: 600}
   swissLimits: {x: 300, y: 800}
   requestedCheese: 0
-  brieWheel: {fileID: 291566076}
-  swissWheel: {fileID: 1373194835}
-  brieSlots:
-  - {fileID: 562767453}
-  - {fileID: 1219911931}
-  - {fileID: 1092208180}
-  swissSlots:
-  - {fileID: 336496495}
-  - {fileID: 268974606}
-  - {fileID: 216555766}
-  otherSlots:
-  - {fileID: 990266482}
-  - {fileID: 1824093856}
-  - {fileID: 460639421}
-  - {fileID: 1391234417}
+  brieWheel: {fileID: 0}
+  swissWheel: {fileID: 0}
+  brieSlots: []
+  swissSlots: []
+  otherSlots: []
 --- !u!4 &99972506
 Transform:
   m_ObjectHideFlags: 0
@@ -1648,7 +1638,7 @@ MonoBehaviour:
   shelfSlots: {fileID: 0}
   selfCollider: {fileID: 0}
   slotToClone: {fileID: 0}
-  controllerCut: {fileID: 9583624}
+  controllerCut: {fileID: 0}
   toBeCut: 0
   hasCloned: 0
   wasCloned: 0
@@ -1824,7 +1814,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 5.8, y: 5.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -5343,7 +5333,7 @@ MonoBehaviour:
   shelfSlots: {fileID: 0}
   selfCollider: {fileID: 0}
   slotToClone: {fileID: 0}
-  controllerCut: {fileID: 9583624}
+  controllerCut: {fileID: 0}
   toBeCut: 0
   hasCloned: 0
   wasCloned: 0
@@ -6310,6 +6300,10 @@ PrefabInstance:
     - target: {fileID: 4029441202679634317, guid: 1f0e3dcb64dcac54f89fef402dbcb935, type: 3}
       propertyPath: m_Name
       value: CuttingLogic
+      objectReference: {fileID: 0}
+    - target: {fileID: 4029441202679634317, guid: 1f0e3dcb64dcac54f89fef402dbcb935, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4081988984039278750, guid: 1f0e3dcb64dcac54f89fef402dbcb935, type: 3}
       propertyPath: m_AnchorMax.x

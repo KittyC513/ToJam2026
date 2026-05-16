@@ -37,6 +37,8 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     public SlotScript slotScript;
 
+    public GameObject newSlice;
+
     private void OnEnable()
     {
 
@@ -51,7 +53,6 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         originalPos = cuttingLine.transform;
         radialBar = fillBar;
 
-        GenerateNewSlice();
     }
 
     void IDragHandler.OnDrag(PointerEventData eventData)
@@ -142,10 +143,9 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         // If the mouse left button is released, consider the cut is done
         if (Input.GetMouseButtonUp(0))
         {
-            calculateHalves(cutAmount);
+            //calculateHalves(cutAmount);
             CheeseCutCheck();
             isCutting = false;
-            //StartCoroutine(OnCut());
         }
         
 
@@ -164,7 +164,7 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
     {
         if (cutAmount >= cheeseSize)
         {
-            Reset();
+            //Reset();
         }
         else
         {
@@ -184,57 +184,64 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
             staticLine.GetComponent<Image>().enabled = false;
             cuttingLine.GetComponent<Image>().enabled = false;
-
-            //            SceneControl.instance.SliceCheese(1);
-        }
+            GenerateNewSlice();
+                //SceneControl.instance.SliceCheese(1);
+            }
         }
     }
 
     void GenerateNewSlice() 
     {
-        Vector2 outward = Vector2.zero;
-        radialBar = cheessBar;
-        fillBar.enabled = false;
+        newSlice.SetActive(true);
+        GenerateNewSlice newSliceScript = newSlice.GetComponent<GenerateNewSlice>();
+        newSliceScript.NewSlice(cheese.localScale);
 
-        radialBar.fillAmount = radialBar.fillAmount;
-        fill = radialBar.rectTransform;
+        StartCoroutine(OnCut());
 
-        if(GameManager.Instance.cheeseList.Count > 1)
-        {
-            cutAmount = cheeseSize - GameManager.Instance.cheeseList[cheeseIndex].cheeseSize;
-            Debug.Log("Cheese Size: " + cheeseSize);
-            Debug.Log("Previous Cheese Size: " + GameManager.Instance.cheeseList[cheeseIndex].cheeseSize);
-            Debug.Log("Cut Amount: " + cutAmount);
+        //print("Generating new slice");
+        //Vector2 outward = Vector2.zero;
+        //radialBar = cheessBar;
+        //fillBar.enabled = false;
 
-            if (cutAmount < 0.5f)
-            {
-                outward = -cheese.up * outwardForce + cheese.right * outwardForce;
-            }
-            else if (cutAmount > 0.5f)
-            {
-                outward = cheese.up * outwardForce + cheese.right * outwardForce;
-            }
-            else 
-            {
-                outward = -cheese.right * outwardForce;
-            }
+        //radialBar.fillAmount = radialBar.fillAmount;
+        //fill = radialBar.rectTransform;
 
-            cheese.localScale = new Vector3(-1, 1, 1);
-            cheese.anchoredPosition += outward;
+        //if(GameManager.Instance.cheeseList.Count > 1)
+        //{
+        //    cutAmount = cheeseSize - GameManager.Instance.cheeseList[cheeseIndex].cheeseSize;
+        //    Debug.Log("Cheese Size: " + cheeseSize);
+        //    Debug.Log("Previous Cheese Size: " + GameManager.Instance.cheeseList[cheeseIndex].cheeseSize);
+        //    Debug.Log("Cut Amount: " + cutAmount);
+
+        //    if (cutAmount < 0.5f)
+        //    {
+        //        outward = -cheese.up * outwardForce + cheese.right * outwardForce;
+        //    }
+        //    else if (cutAmount > 0.5f)
+        //    {
+        //        outward = cheese.up * outwardForce + cheese.right * outwardForce;
+        //    }
+        //    else 
+        //    {
+        //        outward = -cheese.right * outwardForce;
+        //    }
+
+        //    cheese.localScale = new Vector3(-1, 1, 1);
+        //    cheese.anchoredPosition += outward;
 
 
-            staticLine.GetComponent<Image>().enabled = false;
-            cuttingLine.GetComponent<Image>().enabled = false;
+        //    staticLine.GetComponent<Image>().enabled = false;
+        //    cuttingLine.GetComponent<Image>().enabled = false;
 
-        }
+        //}
 
 
 
-        radialBar.fillAmount = cutAmount;
+        //radialBar.fillAmount = cutAmount;
 
-        cheeseSize = cheessBar.fillAmount;
+        //cheeseSize = cheessBar.fillAmount;
 
-        radius = cheeseSize * 360f;
+        //radius = cheeseSize * 360f;
 
     }
 
@@ -253,14 +260,8 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
 
     IEnumerator OnCut()
     {
-        yield return new WaitForSeconds(1f);
-
-        foreach (var slice in GameManager.Instance.sliceList)
-        {
-            if (!slice.isOnCutting)
-            {
-                cheeseImage.enabled = false;
-            }
-        }
+        yield return new WaitForSeconds(0.5f);
+        EventManager.isCutting = false;
+        print("Cutting mode: OFF");
     }
 }

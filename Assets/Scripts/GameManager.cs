@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public float slice_leftSize;
     public float slice_rightSize;
 
+
     //public float slide_leftSize;
 
     //public float slide_rightSize;
@@ -74,4 +75,5 @@ public class GameManager : MonoBehaviour
         sliceList[0].cheeseSize = slice_leftSize;
         sliceList[1].cheeseSize = slice_rightSize;
     }
+
 }

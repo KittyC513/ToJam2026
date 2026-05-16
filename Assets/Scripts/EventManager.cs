@@ -1,16 +1,7 @@
 using UnityEngine;
 
-public class EventManager : MonoBehaviour
+public static class EventManager
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public static bool isCutting;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -106,19 +106,19 @@ public class SlicePiece : MonoBehaviour
     private void OnMouseDown()
     {
         
-        if(isHovering && timer >= resetTimer)
-        {
-            GameManager.Instance.IsSelected(sliceIndex);
-            timer = 0;
-            GameEvents.OnSecondCut?.Invoke();
-            GameManager.Instance.cheeseList[0].cheeseSize = cheeseSize;
-            GameManager.Instance.cheeseList[1].cheeseImage.enabled = false;
+        //if(isHovering && timer >= resetTimer)
+        //{
+        //    GameManager.Instance.IsSelected(sliceIndex);
+        //    timer = 0;
+        //    GameEvents.OnSecondCut?.Invoke();
+        //    GameManager.Instance.cheeseList[0].cheeseSize = cheeseSize;
+        //    GameManager.Instance.cheeseList[1].cheeseImage.enabled = false;
 
-            if (isOnCutting)
-            {
-                GameEvents.OnCheeseCut();
-            }
-        }
+        //    if (isOnCutting)
+        //    {
+        //        GameEvents.OnCheeseCut();
+        //    }
+        //}
 
     }
 
