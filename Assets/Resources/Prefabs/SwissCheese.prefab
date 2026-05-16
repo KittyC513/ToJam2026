@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2897844934622868813}
   - component: {fileID: 4801884325589164317}
+  - component: {fileID: 622208908272219536}
   m_Layer: 0
   m_Name: SwissCheese
   m_TagString: Untagged
@@ -46,6 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tempCheeseWeight: 25
+--- !u!114 &622208908272219536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6127196156340164086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7be6df59f3b31448babe75d932c2ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cheeseSize: 0
 --- !u!1 &6255628211268588860
 GameObject:
   m_ObjectHideFlags: 0

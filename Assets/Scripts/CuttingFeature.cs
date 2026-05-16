@@ -168,24 +168,28 @@ public class CuttingFeature : MonoBehaviour, IDragHandler
         }
         else
         {
-            if (fillBar != null) {
-            radialBar = cheessBar;
-            fillBar.enabled = false;
+            if (fillBar != null) 
+            {
+                radialBar = cheessBar;
+                fillBar.enabled = false;
 
-            radialBar.fillAmount = radialBar.fillAmount;
-            fill = radialBar.rectTransform;
+                radialBar.fillAmount = radialBar.fillAmount;
+                fill = radialBar.rectTransform;
 
-            radialBar.fillAmount = cutAmount;
+                radialBar.fillAmount = cutAmount;
 
-            cheeseSize = cheessBar.fillAmount;
+                cheeseSize = cheessBar.fillAmount;
 
-            //cuttingLine.gameObject.SetActive(false);
-            //staticLine.gameObject.SetActive(false);
+                //cuttingLine.gameObject.SetActive(false);
+                //staticLine.gameObject.SetActive(false);
 
-            staticLine.GetComponent<Image>().enabled = false;
-            cuttingLine.GetComponent<Image>().enabled = false;
-            GenerateNewSlice();
-                //SceneControl.instance.SliceCheese(1);
+                staticLine.GetComponent<Image>().enabled = false;
+                cuttingLine.GetComponent<Image>().enabled = false;
+                GenerateNewSlice();                                                            
+
+                CheeseManager.Instance.cheeseList.Add(new CheeseData(cheeseSize,1));
+                CheeseManager.Instance.sliceCount++;
+
             }
         }
     }

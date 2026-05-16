@@ -186,6 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3987529435077608331}
   - component: {fileID: 480161069094147752}
+  - component: {fileID: 9218343772321714627}
   m_Layer: 0
   m_Name: BrieCheese
   m_TagString: Untagged
@@ -222,3 +223,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tempCheeseWeight: 1000
+--- !u!114 &9218343772321714627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7391163386234027243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7be6df59f3b31448babe75d932c2ddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cheeseSize: 0
